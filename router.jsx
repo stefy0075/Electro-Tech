@@ -1,14 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
+import Layout from "./src/layout/layout"
 
 
 const router = createBrowserRouter([
-    // { 
-    //     path: '/' , 
-    //     element: < /> , 
-    //     children: [
-    //         { path: '/', element: < /> },
-    //     ]
-    // }, 
+    { 
+        path: '/' , 
+        element: < Layout /> , 
+        // children: [
+        //     { path: '/', element: < /> },
+        // ]
+    }, 
     
     
 
