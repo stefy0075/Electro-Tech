@@ -1,15 +1,88 @@
-import Logo from "../assets/Logo.png";
+import Logo from '../assets/Logo.png';
+import { FiSearch, FiUser, FiShoppingBag, FiChevronDown } from 'react-icons/fi';
+
 const Nav = () => {
   return (
     <>
-      <div className=" shadow-lg w-full sticky z-50 top-0 left-0 h-[5em] md:h-[7.5em]">
+      {/* Navbar Superior */}
+      <div className="bg-primary text-white">
+        <div className="container mx-auto px-4 py-2 flex justify-between items-center">
+          {/* Logo */}
+          <div className="flex items-center">
+            <img src={Logo} alt="ElectroTech" className="h-12" />
+          </div>
 
-        <div className=" flex items-center justify-center md:justify-start	 bg-primary h-[4em] md:h-[5.5em]">
-        <img className="h-[85%] md:ml-[3.5em]" src={Logo} alt="Logo" />
+          {/* Barra de Búsqueda */}
+          <div className=" py-3">
+            <div className="container mx-auto px-4">
+              <form className="relative max-w-3xl mx-auto">
+                <input
+                  type="text"
+                  placeholder="Buscar productos..."
+                  className="w-full py-2 px-4 rounded-lg focus:outline-none"
+                  autoComplete="off"
+                />
+                <button
+                  type="submit"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-primary"
+                >
+                  <FiSearch size={20} />
+                </button>
+              </form>
+            </div>
+          </div>
+          {/* Acciones */}
+          <div className="flex items-center space-x-6">
+            <a href="/login" className="flex items-center hover:text-secondary">
+              <FiUser className="mr-1" /> Ingresá / Registrate
+            </a>
+            <a
+              href="/cart"
+              className="flex items-center hover:text-secondary relative"
+            >
+              <FiShoppingBag className="mr-1" />
+              Carrito{' '}
+              <span className="ml-1 bg-secondary text-primary rounded-full px-2 py-0.5 text-xs">
+                0
+              </span>
+            </a>
+          </div>
         </div>
-
-
-        <div className="shadow-lg w-full bg-secondary h-[1em] md:h-[2em]"></div>
+      </div>
+      {/* Menú de Categorías */}
+      <div className="bg-secondary text-white hidden md:block">
+        <div className="container mx-auto px-4">
+          <nav className="flex justify-center space-x-8 py-3">
+            <a href="/" className="hover:text-secondary font-medium">
+              Inicio
+            </a>
+            <div className="group relative">
+              <button className="hover:text-secondary font-medium flex items-center">
+                Notebooks <FiChevronDown className="ml-1" />
+              </button>
+              <div className="absolute z-10 left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-1 hidden group-hover:block border border-secondary">
+                <a
+                  href="/notebooks/gamer"
+                  className="block px-4 py-2 text-primary hover:bg-gray-100"
+                >
+                  Gamer
+                </a>
+                <a
+                  href="/notebooks/ultrabooks"
+                  className="block px-4 py-2 text-primary hover:bg-gray-100"
+                >
+                  Ultrabooks
+                </a>
+              </div>
+            </div>
+            <a
+              href="/climatizacion"
+              className="hover:text-secondary font-medium"
+            >
+              Climatización
+            </a>
+          </nav>
+        </div>
       </div>
     </>
   );
