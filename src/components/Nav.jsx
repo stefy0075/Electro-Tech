@@ -1,9 +1,37 @@
 import Logo from '../assets/Logo.png';
-import { useState } from 'react';
-import { FiSearch, FiUser, FiShoppingBag, FiChevronDown } from 'react-icons/fi';
+import { FiSearch, FiUser, FiShoppingBag } from 'react-icons/fi';
+import { useEffect, useState, useCallback } from 'react';
 
 const Nav = () => {
   const [showNav] = useState(true);
+  const [categories, setCategories] = useState([]);
+
+  const BASE_API_URL = import.meta.env.VITE_API_BASE_URL;
+
+  const fetchCategories = useCallback(async () => {
+    try {
+      const response = await fetch(`${BASE_API_URL}/api/products/categories`);
+      const result = await response.json();
+
+      if (result.success && result.data && result.data.categories) {
+        setCategories(result.data.categories);
+      } else {
+        throw new Error('Formato de respuesta inesperado');
+      }
+    } catch (err) {
+      console.error('Error fetching categories:', err);
+    }
+  }, [BASE_API_URL]);
+
+  useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
+
+  // Función para formatear el nombre de la categoría
+  const formatCategoryName = (category) => {
+    return category.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase());
+  };
+
   return (
     <>
       {/* Navbar Superior */}
@@ -11,14 +39,14 @@ const Nav = () => {
         <div className="container mx-auto px-4 py-2 flex items-center justify-center md:justify-between">
           {/* Logo */}
           <div className="flex items-center md:h-20 border-b-2 border-secondary md:border-none">
-            <img src={Logo} alt="ElectroTech" className=" m-2 h-20 md:h-12" />
+            <img src={Logo} alt="ElectroTech" className="m-2 h-20 md:h-12" />
           </div>
 
           {/* Contenido que solo aparece en desktop */}
           {showNav && (
             <div className="hidden md:flex items-center space-x-6">
               {/* Barra de Búsqueda */}
-              <div className="py-3 ">
+              <div className="py-3">
                 <form className="relative max-w-3xl mx-auto">
                   <input
                     type="text"
@@ -61,85 +89,18 @@ const Nav = () => {
       <div className="bg-secondary text-white hidden md:block">
         <div className="container mx-auto px-4">
           <nav className="flex justify-center space-x-8 py-3">
-            <a href="/" className="hover:text-secondary font-medium">
+            <a href="/" className="hover:text-primary font-medium">
               Inicio
             </a>
-            <div className="group relative">
-              <button className="hover:text-secondary font-medium flex items-center">
-                Notebooks <FiChevronDown className="ml-1" />
-              </button>
-              <div className="absolute z-10 left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-1 hidden group-hover:block border border-secondary">
-                <a
-                  href="/notebooks/gamer"
-                  className="block px-4 py-2 text-primary hover:bg-gray-100"
-                >
-                  Gamer
-                </a>
-                <a
-                  href="/notebooks/ultrabooks"
-                  className="block px-4 py-2 text-primary hover:bg-gray-100"
-                >
-                  Ultrabooks
-                </a>
-              </div>
-            </div>
-            <div className="group relative">
-              <button className="hover:text-secondary font-medium flex items-center">
-                Climatización <FiChevronDown className="ml-1" />
-              </button>
-              <div className="absolute z-10 left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-1 hidden group-hover:block border border-secondary">
-                <a
-                  href="/climatizacion/portatiles"
-                  className="block px-4 py-2 text-primary hover:bg-gray-100"
-                >
-                  Portátiles
-                </a>
-                <a
-                  href="/climatizacion/aires-acondicionados"
-                  className="block px-4 py-2 text-primary hover:bg-gray-100"
-                >
-                  Aires Acondicionados
-                </a>
-              </div>
-            </div>
-            <div className="group relative">
-              <button className="hover:text-secondary font-medium flex items-center">
-                Climatización <FiChevronDown className="ml-1" />
-              </button>
-              <div className="absolute z-10 left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-1 hidden group-hover:block border border-secondary">
-                <a
-                  href="/climatizacion/portatiles"
-                  className="block px-4 py-2 text-primary hover:bg-gray-100"
-                >
-                  Portátiles
-                </a>
-                <a
-                  href="/climatizacion/aires-acondicionados"
-                  className="block px-4 py-2 text-primary hover:bg-gray-100"
-                >
-                  Aires Acondicionados
-                </a>
-              </div>
-            </div>
-            <div className="group relative">
-              <button className="hover:text-secondary font-medium flex items-center">
-                Notebooks <FiChevronDown className="ml-1" />
-              </button>
-              <div className="absolute z-10 left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-1 hidden group-hover:block border border-secondary">
-                <a
-                  href="/notebooks/gamer"
-                  className="block px-4 py-2 text-primary hover:bg-gray-100"
-                >
-                  Gamer
-                </a>
-                <a
-                  href="/notebooks/ultrabooks"
-                  className="block px-4 py-2 text-primary hover:bg-gray-100"
-                >
-                  Ultrabooks
-                </a>
-              </div>
-            </div>
+            {categories.map((category, index) => (
+              <a
+                key={index}
+                href={`/category/${category}`}
+                className="hover:text-primary font-medium"
+              >
+                {formatCategoryName(category)}
+              </a>
+            ))}
           </nav>
         </div>
       </div>

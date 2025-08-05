@@ -5,11 +5,9 @@ import ProductCard from '../components/productcard';
 const Home = () => {
   const [topSellers, setTopSellers] = useState([]);
   const [specialOffers, setSpecialOffers] = useState([]);
-  const [categories, setCategories] = useState([]);
   const [cashDiscountProducts, setCashDiscountProducts] = useState([]);
 
   const BASE_API_URL = import.meta.env.VITE_API_BASE_URL;
-  console.log(BASE_API_URL);
 
   const fetchProducts = useCallback(async () => {
     try {
@@ -33,26 +31,9 @@ const Home = () => {
     }
   }, [BASE_API_URL]);
 
-  const fetchCategories = useCallback(async () => {
-    try {
-      const response = await fetch(`${BASE_API_URL}/api/products/categories`);
-      const result = await response.json();
-
-      if (result.success && result.data && result.data.categories) {
-        setCategories(result.data.categories);
-        console.log(result);
-      } else {
-        throw new Error('Formato de respuesta inesperado');
-      }
-    } catch (err) {
-      console.error('Error fetching categories:', err);
-    }
-  }, [BASE_API_URL]);
-
   useEffect(() => {
     fetchProducts();
-    fetchCategories();
-  }, [fetchProducts, fetchCategories]);
+  }, [fetchProducts]);
 
   return (
     <div className="bg-gray-50 pb-20">
@@ -70,31 +51,6 @@ const Home = () => {
               Ver ofertas <FiChevronRight className="inline ml-1" />
             </button>
           </div>
-        </div>
-      </div>
-
-      {/* Categorías */}
-      <div className="container mx-auto px-4 py-12">
-        <h2 className="text-2xl font-bold mb-6 text-primary">Categorías</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {categories.map((cat, i) => (
-            <a
-              key={i}
-              href={cat.link}
-              className="bg-white rounded-lg shadow hover:shadow-lg transition"
-            >
-              <img
-                src={cat.image}
-                alt={cat.name}
-                className="w-full h-32 md:h-40 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="font-medium text-center text-black">
-                  {cat.name}
-                </h3>
-              </div>
-            </a>
-          ))}
         </div>
       </div>
 
