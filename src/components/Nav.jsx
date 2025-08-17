@@ -15,6 +15,7 @@ const Nav = () => {
 
       if (result.success && result.data && result.data.categories) {
         setCategories(result.data.categories);
+        console.log(result.data.categories);
       } else {
         throw new Error('Formato de respuesta inesperado');
       }
@@ -96,7 +97,7 @@ const Nav = () => {
               <a
                 key={index}
                 href={`/category/${category}`}
-                className="hover:text-primary font-medium"
+                className="hover:text-primary font-medium text-lg"
               >
                 {formatCategoryName(category)}
               </a>

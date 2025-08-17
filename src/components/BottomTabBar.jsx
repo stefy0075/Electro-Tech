@@ -80,7 +80,7 @@ const BottomTabBar = () => {
             onClick={() => setShowMenu(false)}
           />
 
-          <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-xl z-50 animate-slide-up max-h-[70vh] overflow-y-auto">
+          <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-xl z-50 animate-slide-up max-h-[70vh] overflow-y-auto pb-20">
             <div className="sticky top-0 bg-white p-4 flex justify-between items-center border-b">
               <h3 className="text-lg font-bold text-primary">Categorías</h3>
               <button

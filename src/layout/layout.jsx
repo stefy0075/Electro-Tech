@@ -5,7 +5,7 @@ import BottomTabBar from '../components/BottomTabBar';
 
 const Layout = () => {
   return (
-    <div className="pb-16">
+    <div>
       <Nav />
       <Outlet />
       <Footer />
